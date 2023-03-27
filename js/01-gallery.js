@@ -35,22 +35,32 @@ function onGalleryContainerClick(e) {
   const isGalleryItem = e.target.nodeName;
   console.log(isGalleryItem);
 
-  if (e.target.nodeName !== 'IMG') {
+  if (isGalleryItem !== 'IMG') {
     return;
   }
 
+  onModal(e);
+}
+
+function onModal(e) {
   const instance = basicLightbox.create(
-    `<img src="${e.target.dataset.source}" width="800" height="600">`
+    `<img src="${e.target.dataset.source}" width="800" height="600">`,
+    {
+      onShow: _instance => {
+        document.addEventListener('keydown', onEscKeyPress);
+      },
+
+      onClose: _instance => {
+        document.removeEventListener('keydown', onEscKeyPress);
+      },
+    }
   );
+
   instance.show();
 
-  galleryContainer.addEventListener('keydown', onEscKeyPress);
   function onEscKeyPress(e) {
-    const ESC_KEY_CODE = 'Escape';
-    const isEscKey = e.code === ESC_KEY_CODE;
-
-    if (isEscKey) {
-      instance.close();
+    if (e.code === 'Escape') {
     }
+    instance.close();
   }
 }
