@@ -46,11 +46,11 @@ function onModal(e) {
   const instance = basicLightbox.create(
     `<img src="${e.target.dataset.source}" width="800" height="600">`,
     {
-      onShow: _instance => {
+      onShow: () => {
         document.addEventListener('keydown', onEscKeyPress);
       },
 
-      onClose: _instance => {
+      onClose: () => {
         document.removeEventListener('keydown', onEscKeyPress);
       },
     }
